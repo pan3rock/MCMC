@@ -156,7 +156,7 @@ int Mcmc::save_chain(char *file_name, char *header) {
     return 1;
 }
 
-int Mcmc::run(double (*func)(std::vector<double> &), int steps) {
+int Mcmc::run(std::function<double(std::vector<double> &)> func, int steps) {
     for (int i = 1; i <= steps; i++) {
         // 1:
         for (int k = 1; k <= nwalkers; k++) {
@@ -207,8 +207,8 @@ int Mcmc::run(double (*func)(std::vector<double> &), int steps) {
     return 0;
 }
 
-int Mcmc::run_parallel(double (*func)(std::vector<double>&), int steps,
-                       int threads) {
+int Mcmc::run_parallel(std::function<double(std::vector<double> &)> func,
+                       int steps, int threads) {
     std::vector<Ensemble> samples;
     samples = sample.divideEnsemble();
 
@@ -278,7 +278,8 @@ int Mcmc::run_parallel(double (*func)(std::vector<double>&), int steps,
     return 0;
 }
 
-int Mcmc::run_notlog(double (*func)(std::vector<double>&), int steps) {
+int Mcmc::run_notlog(std::function<double(std::vector<double> &)> func,
+                     int steps) {
     for (int i = 1; i <= steps; i++) {
         // 1:
         for (int k = 1; k <= nwalkers; k++) {

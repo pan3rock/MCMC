@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <limits>
 #include <sstream>
@@ -28,10 +29,11 @@ class Mcmc {
     std::vector<std::vector<double>> load_state(char *file_name);
 
    public:
-    int run(double (*func)(std::vector<double> &), int steps);
-    int run_parallel(double (*func)(std::vector<double> &), int steps,
-                     int threads);
-    int run_notlog(double (*func)(std::vector<double> &), int steps);
+    int run(std::function<double(std::vector<double> &)> func, int steps);
+    int run_parallel(std::function<double(std::vector<double> &)> func,
+                     int steps, int threads);
+    int run_notlog(std::function<double(std::vector<double> &)> func,
+                   int steps);
     int reset();
     int save_state(char *file_name);
 
